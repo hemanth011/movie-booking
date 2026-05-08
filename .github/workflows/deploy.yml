@@ -26,4 +26,9 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no -o ConnectTimeout=30 -v ubuntu@$HOST "echo connected"
+          ssh -i private_key.pem \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=60 \
+            -o ServerAliveInterval=30 \
+            -p 22 \
+            ubuntu@$HOST "echo SSH_SUCCESS"
