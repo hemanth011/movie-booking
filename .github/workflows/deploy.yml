@@ -26,9 +26,4 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
-          scp -i private_key.pem -o StrictHostKeyChecking=no \
-            target/movie-booking-0.0.1-SNAPSHOT.jar \
-            ubuntu@$HOST:/home/ubuntu/movie-booking/target/
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@$HOST \
-            "pkill -f 'movie-booking' || true; cd /home/ubuntu/movie-booking; set -a && source .env && set +a; nohup java -jar target/movie-booking-0.0.1-SNAPSHOT.jar > app.log 2>&1 &"
-          rm -f private_key.pem
+          ssh -i private_key.pem -o StrictHostKeyChecking=no -o ConnectTimeout=30 -v ubuntu@$HOST "echo connected"
