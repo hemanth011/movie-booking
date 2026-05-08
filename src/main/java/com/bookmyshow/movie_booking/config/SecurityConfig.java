@@ -42,8 +42,9 @@ public class SecurityConfig {
         http    .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/public/**", "/api/v1/public/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/owner/**").hasAuthority("ROLE_THEATRE_OWNER")
                         .requestMatchers("/api/user/**").hasAuthority("ROLE_USER")
